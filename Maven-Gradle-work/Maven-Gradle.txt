@@ -1,0 +1,73 @@
+# How Maven or Gradle file with java app and how its work with Java.
+
+Maven and Gradle are build automation tools used in Java projects. They take Java source code, compile it, run tests, manage dependencies, and package the application into a JAR or WAR file.
+1. How Maven or Gradle works
+Java source code
+
+Main.java
+
+Maven / Gradle
+
+Downloads dependencies, compiles code, runs tests
+
+Build artifact
+
+myapp.jar or myapp.war
+
+Deployment
+
+VM, application server, or Docker/Kubernetes
+
+
+2. How Maven works with Java
+Suppose your Java project has this structure:
+myapp/
+├── pom.xml
+└── src/
+    ├── main/java/Main.java
+    └── test/java/MainTest.java
+
+
+- Main.java contains your application source code.
+- pom.xml defines dependencies, plugins, and build configuration.
+- Maven reads pom.xml and performs the requested build steps.
+Common Maven commands:
+Command	Purpose
+mvn compile	Compiles Java source code
+mvn test	Runs unit tests
+mvn package	Creates a JAR or WAR
+mvn clean	Removes previous build output
+mvn clean package	Cleans and builds the artifact
+mvn install	Builds the artifact and stores it in the local Maven repository
+After running mvn package, the artifact is usually generated in the target/ directory, for example target/myapp.jar.
+3. How Gradle works with Java
+Gradle performs similar tasks but typically uses a build.gradle or build.gradle.kts file.
+
+Example project structure:
+myapp/
+├── build.gradle
+├── settings.gradle
+└── src/main/java/Main.java
+
+
+Common Gradle commands:
+Command	Purpose
+gradle compileJava	Compiles Java source code
+gradle test	Runs unit tests
+gradle build	Compiles, tests, and builds the application
+gradle clean	Removes previous build output
+gradle clean build	Cleans and builds the application
+The artifact is usually generated in the build/libs/ directory.
+4. How this fits into a DevOps CI/CD pipeline
+For example, in Azure DevOps or Jenkins:
+1. Fetch Java source code from Git.
+2. Install or select the required JDK.
+3. Run mvn clean package or gradle clean build.
+4. Publish the generated JAR/WAR as a build artifact.
+5. Build a Docker image containing the application and its runtime.
+6. Push the image to a container registry.
+7. Deploy it to Kubernetes.
+Interview answer
+“Maven and Gradle are Java build automation tools. They read the project configuration, download required dependencies, compile the Java source code, execute unit tests, and package the application into a JAR or WAR file. In a CI/CD pipeline, we use them to build and validate the application before publishing the artifact or creating a Docker image for deployment.”
+
+Easy way to remember: Java is the source code; Maven or Gradle builds it; JAR/WAR is the packaged artifact; Docker packages the application and its runtime environment for deployment.
