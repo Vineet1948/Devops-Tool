@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydep
+  labels:
+    my: dep
+  annotations:
+    kubectl.kubernetes.io/change-cause: "myfirs message"
+spec:
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      name: dpod
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: dcont
+          image: nginx:latest
+          volumeMounts:
+            - name: testvol
+              mountPath: "/config"
+              readOnly: true
+          env:
+            - name: fromcm
+              valueFrom: 
+                configMapKeyRef:  
+                  key: var1
+                  name: cmenv01 
+            - name: fromfileval
+              valueFrom: 
+                configMapKeyRef:  
+                  key: file.application
+                  name: cmf02 
+          resources:
+            requests:  
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+      volumes:
+        - name: testvol
+          configMap:
+            name: cmf02
+
+            

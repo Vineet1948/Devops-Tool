@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc01
+  labels:
+    app: test
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 30080
+      port: 8000
+      targetPort: 80
+  selector:
+      app: myapp

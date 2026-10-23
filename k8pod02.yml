@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tpod02
+spec:
+  containers:
+    - image: nginx:latest
+      name: mytcon02
+      volumeMounts:
+        - mountPath: "/test"
+          name: mytestvol
+          readOnly: no
+  volumes:
+    - name: mytestvol
+      emptyDir: {}

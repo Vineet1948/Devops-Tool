@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tpod
+  labels:
+    app: myapp
+spec:
+  containers:
+    - name: tpod01
+      image: coolgourav147/nginx-custom:v2
+      env:
+        - name: valuefrom
+          valueFrom:
+            secretKeyRef: 
+              key: var1
+              name: envsec02
+      envFrom:
+        - secretRef:
+            name: envsec02  
+  tolerations:
+    - effect: "NoSchedule"
+      key: "mysize"
+      operator: "Equal"
+      value: "large"
+  nodeSelector:
+    size: small

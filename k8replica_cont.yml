@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myrc
+  labels:
+    exp: rc
+spec:
+  replicas: 5
+  selector: 
+    app: test
+  template:
+    metadata:
+      name: firstpod
+      labels:
+        app: test
+    spec:
+      containers:
+        - name: mycont
+          image: nginx:latest
